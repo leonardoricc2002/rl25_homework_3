@@ -176,7 +176,7 @@ ros2 run plotjuggler plotjuggler
 
 2.Select metadata.yaml, choose /fmu/out/vehicle_local_position and /fmu/out/vehicle_attitude, and click OK.
 
-#Plot 1: 2D Trajectory (Shape Verification)
+# Plot 1: 2D Trajectory (Shape Verification)
 
 1.In the Timeseries List, navigate to /fmu/out/vehicle_local_position.
 
@@ -184,7 +184,7 @@ ros2 run plotjuggler plotjuggler
 
 3.Right-click on the selected series and drag them onto the graph to display the 2D trajectory covered by the drone.
 
-#Plot 2: Velocity Magnitude (Continuity Proof)
+# Plot 2: Velocity Magnitude (Continuity Proof)
 
 1.Split another plot.
 
@@ -197,11 +197,11 @@ return sqrt(value*value + v1*v1 + v2*v2)^(1/2)
 
 5.Click "Create New Timeseries".
 
-#Plot 3: Acceleration Magnitude (Smoothness Proof)
+# Plot 3: Acceleration Magnitude (Smoothness Proof)
 
 Perform the same procedure as Plot 2, but using ax, ay, and az to calculate the total acceleration with the same formula.
 
-#Plot 4: Yaw Angle (Orientation)
+# Plot 4: Yaw Angle (Orientation)
 
 1.For the Yaw angle, go to /fmu/out/vehicle_attitude/q[].
 
