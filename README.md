@@ -14,7 +14,8 @@ Before beginning, you must have QGroundControl (QGround) and PlotJuggler install
 Clone this package into the src folder of your ROS 2 workspace,in particular :
 1. aerial_robotics folder in your src folder of your ROS 2.
 2. my_quadrotor folder in PX4-Autopilot/Tools/simulation/gz/models
-3. 
+3. 3001_my_quadrotor and CMakeLists.txt file in PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes
+4. dds_topics.yaml file in PX4-Autopilot/src/modules/uxrce_dds_client
 ```
 https://github.com/leonardoricc2002/rl25_homework_3.git
 ```
