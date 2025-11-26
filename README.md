@@ -7,14 +7,17 @@ Student: Leonardo Riccardi / P38000358
 # 🎯 Project Objective
 The overarching goal of this project is to extend and validate PX4-Autopilot functionalities through three key development efforts: hardware configuration, control logic modification, and trajectory planning. This includes integrating a custom UAV model and modifying the force land node to implement a critical safety exception concerning pilot interruptions. The core technical requirement involves developing a smooth trajectory planner (non-zero intermediate velocity) in Offboard mode, with its precision and continuity rigorously proven by analyzing logged velocity and acceleration data.
 
-##⚙️ Prerequisites and Setup
+# ⚙️ Prerequisites and Setup
 Before beginning, you must have QGroundControl (QGround) and PlotJuggler installed.
 
-#Build 
-Clone this package into the src folder of your ROS 2 workspace.
+# Build 
+Clone this package into the src folder of your ROS 2 workspace,in particular :
+1. aerial_robotics in your src folder of your ROS 2.
+2. 
 ```
 https://github.com/leonardoricc2002/rl25_homework_3.git
 ```
+
 # Clone this package in the src folder of your ROS 2 workspace.
 Build and source the setup files.
 
@@ -97,7 +100,7 @@ source install/setup.bash
 ```
 ros2 launch force_land force_land.launch.py
 ```
-#Testing the Safety Exception
+# Testing the Safety Exception
 
 1.In QGroundControl, execute a Takeoff and wait until it reaches 10 meters.
 
