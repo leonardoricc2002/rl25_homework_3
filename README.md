@@ -23,7 +23,9 @@ now move these files in the right folders :
 
 # Clone this package in the src folder of your ROS 2 workspace.
 Build and source the setup files.
-
+```
+cd /home/user/ros2_ws
+```
 ```
 colcon build
 ```
@@ -32,7 +34,7 @@ source install/setup.bash
 ```
 ## 🚀 HOW TO LAUNCH
 Terminal 1: PX4 SITL.Launch the drone in Gazebo. First, navigate to the dedicated PX4-Autopilot folder.
-#Ensure QGroundControl is kept open.
+# Ensure QGroundControl is kept open.
 
 ```
 cd src/PX4-Autopilot/
@@ -57,7 +59,7 @@ cd src/aerial_robotics/ros2_ws/
 ros2 run plotjuggler plotjuggler
 ```
 # Visualization Setup
-For real-time visualization:
+Move your drone by using Qground with left and right joystick. For real-time visualization:
 
 1.Press Start.
 
