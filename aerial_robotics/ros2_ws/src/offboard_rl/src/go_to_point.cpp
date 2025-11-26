@@ -11,9 +11,6 @@
 using namespace std::chrono_literals;
 using namespace px4_msgs::msg;
 
-// Usa Eigen::Vector di dimensione fissa per chiarezza e prestazioni
-// Devi assicurarti che questi tipi siano definiti in <offboard_rl/utils.h> o in un file incluso.
-// Se stai usando un ambiente con Eigen, questi dovrebbero essere OK.
 using Vector4d = Eigen::Vector4d;
 using VectorXd = Eigen::VectorXd;
 
@@ -51,37 +48,22 @@ class GoToPoint : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_offboard_;
     rclcpp::TimerBase::SharedPtr timer_trajectory_publish_;
 
-    // ----------------------------------------------------
-    // Variabili per la Traiettoria Multi-Waypoint (Punto 3.a)
-    // ----------------------------------------------------
-
-	    // Definizione dei 8 Waypoint in NED (Z negativo = Altezza positiva)// Waypoints     aggiornati (Forma a Cuore Extra-Grande)
+	    // Definizione dei 8 Waypoint in NED (Z negativo = Altezza positiva)
 	const std::vector<Vector4d> WAYPOINTS = {
-	    // [0] - Decollo (Altitudine iniziale)
 	    {0.0, 0.0, -10.0, 0.0}, 
 	    
-	    // -- Lati Superiori (Cime) --
-	    // [1] - WP 1 (Curva in alto a destra)
-	    {15.0, 20.0, -10.0, 0.5}, // Aumentato Y a 20.0
+	    {15.0, 20.0, -10.0, 0.5}, 
 	    
-	    // [2] - WP 2 (Estremo destro)
-	    {40.0, 0.0, -10.0, 1.57}, // Aumentato X a 40.0
+	    {40.0, 0.0, -10.0, 1.57}, 
 	    
-	    // -- Punta Inferiore --
-	    // [3] - WP 3 (Punta inferiore)
-	    {0.0, -40.0, -10.0, 3.14}, // Aumentato Y a -40.0
+	    {0.0, -40.0, -10.0, 3.14}, 
 	    
-	    // -- Lati Superiori (Cime) --
-	    // [4] - WP 4 (Estremo sinistro)
-	    {-40.0, 0.0, -10.0, -1.57}, // Aumentato X a -40.0
+	    {-40.0, 0.0, -10.0, -1.57}, 
 	    
-	    // [5] - WP 5 (Curva in alto a sinistra)
-	    {-15.0, 20.0, -10.0, 0.0}, // Aumentato Y a 20.0
+        {-15.0, 20.0, -10.0, 0.0}, 
+
+        {0.0, 0.0, -10.0, 0.0},
 	    
-	    // [6] - WP 6 (Ritorno al centro)
-	    {0.0, 0.0, -10.0, 0.0},
-	    
-	    // [7] - WP 7 (Finale)
 	    {0.0, 0.0, -10.0, 0.0} 
 	};
 
@@ -107,9 +89,6 @@ class GoToPoint : public rclcpp::Node
     VehicleAttitude current_attitude_{};
     double offboard_counter{0}; 
 
-    // ----------------------------------------------------
-    // Callbacks
-    // ----------------------------------------------------
 
     void vehicle_local_position_callback(const px4_msgs::msg::VehicleLocalPosition::SharedPtr msg)
     {
@@ -184,9 +163,6 @@ class GoToPoint : public rclcpp::Node
         msg.velocity = {float(ref_traj_vel(0)), float(ref_traj_vel(1)), float(ref_traj_vel(2))};
         msg.acceleration = {float(ref_traj_acc(0)), float(ref_traj_acc(1)), float(ref_traj_acc(2))};
         
-        // *************************************************************
-        // MODIFICA: Imposta lo Yaw in base alla direzione della Velocità
-        // *************************************************************
         // Calcola la velocità orizzontale istantanea
         double horizontal_speed = std::sqrt(std::pow(ref_traj_vel(0), 2) + std::pow(ref_traj_vel(1), 2));
         
@@ -202,17 +178,12 @@ class GoToPoint : public rclcpp::Node
             // o lo Yaw iniziale se è l'ultimo segmento.
             msg.yaw = float(pos_f(3)); 
         }
-        // *************************************************************
 
         msg.timestamp = this->get_clock()->now().nanoseconds() / 1000;
 
         return msg;
     }
     
-    // ----------------------------------------------------
-    // Mission State Logic (Timer Callbacks)
-    // ----------------------------------------------------
-
     void activate_offboard()
     {
         if (offboard_counter == 10) {
@@ -252,9 +223,7 @@ class GoToPoint : public rclcpp::Node
             auto rpy = utilities::quatToRpy( Vector4d( current_attitude_.q[0], current_attitude_.q[1], current_attitude_.q[2], current_attitude_.q[3] ) );
             pos_i_segment(3) = rpy[2]; // Yaw attuale (Yaw di partenza)
             
-            // ********** CATTURA LO YAW INIZIALE **********
             initial_yaw_ = rpy[2]; 
-            // ********************************************
 
             current_segment_index = 0;
             pos_f_segment = WAYPOINTS[current_segment_index + 1]; 
@@ -286,7 +255,6 @@ class GoToPoint : public rclcpp::Node
             return;
         }
 
-        // LOGICA DI ATTERRAGGIO (Triggerata quando trajectory_running = FALSE)
         if (!trajectory_running && !landing_sent) {
             RCLCPP_INFO(this->get_logger(), "Missione Multi-Waypoint Completata. Invio comando LAND. Atterraggio con Yaw: %.2f", initial_yaw_);
             
@@ -339,13 +307,10 @@ class GoToPoint : public rclcpp::Node
                 pos_f_segment = WAYPOINTS[current_segment_index + 1]; 
                 T_segment = SEGMENT_TIMES[current_segment_index];
 
-                // ********** IMPOSTAZIONE YAW FINALE PER L'ATTERRAGGIO **********
-                // Override dello Yaw del waypoint finale (WP 7) con lo Yaw iniziale
                 if (current_segment_index == SEGMENT_TIMES.size() - 1) { // L'indice 6
                     RCLCPP_INFO(this->get_logger(), "IMPOSTAZIONE FINALE: Imposto Yaw del WP 7 a %.2f (Yaw Iniziale).", initial_yaw_);
                     pos_f_segment(3) = initial_yaw_; 
                 }
-                // ***************************************************************
                 
                 t = 0.0;
                 trajectory_computed = false; 
