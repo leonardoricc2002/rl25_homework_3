@@ -11,14 +11,15 @@ The overarching goal of this project is to extend and validate PX4-Autopilot fun
 Before beginning, you must have QGroundControl (QGround) and PlotJuggler installed.
 
 # Build 
-Clone this package into the src folder of your ROS 2 workspace,in particular :
-1. aerial_robotics folder in your src folder of your ROS 2.
-2. my_quadrotor folder in PX4-Autopilot/Tools/simulation/gz/models
-3. 3001_my_quadrotor and CMakeLists.txt file in PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes
-4. dds_topics.yaml file in PX4-Autopilot/src/modules/uxrce_dds_client
+Clone this package into the src folder of your ROS 2 workspace
 ```
 https://github.com/leonardoricc2002/rl25_homework_3.git
 ```
+now move these files in the right folders :
+1. aerial_robotics folder in your src folder of your ROS 2.
+2. my_quadrotor folder in PX4-Autopilot/Tools/simulation/gz/models
+3. 3001_my_quadrotor file in PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes
+4. Replace CMakeLists.txt file in PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes and dds_topics.yaml file in PX4-Autopilot/src/modules/uxrce_dds_client with the corrisponding files obtained with git clone
 
 # Clone this package in the src folder of your ROS 2 workspace.
 Build and source the setup files.
