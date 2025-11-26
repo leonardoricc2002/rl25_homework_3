@@ -44,6 +44,7 @@ make px4_sitl gz_my_quadrotor
 Terminal 2: Initialize DDS Bridge. Source the setup files and execute the command. DDS_run.sh initiates the DDS communication bridge, which is essential for enabling the exchange of flight-critical data between the PX4 flight simulator and the complementary control nodes developed within the ROS 2 ecosystem.
 
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -52,6 +53,7 @@ cd src/aerial_robotics/
 ```
 Terminal 3: PlotJuggler for Real-Time Actuator Output.Source the setup files in a new terminal and open PlotJuggler.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -82,6 +84,7 @@ Keep your drone running in Gazebo with make px4_sitl gz_my_quadrotor and keep QG
 
 Terminal 2: Initialize DDS Bridge.Source the setup files and execute DDS_run.sh.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -91,7 +94,10 @@ cd src/aerial_robotics/
 Terminal 3: Start ROS 2 Bag Recording .Launch the ROS 2 bag command to record the drone's flight path into a folder named proof_flight.
 
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
+```
+```
 cd src/aerial_robotics/ros2_ws
 ```
 ```
@@ -100,6 +106,7 @@ ros2 bag record -o proof_flight /fmu/out/vehicle_local_position /fmu/out/manual_
 Terminal 4: Launch Force Land Node .Source the setup files in a new terminal and launch the node that monitors the drone's altitude.
 
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -122,6 +129,7 @@ Terminal 5: Analyze Logged Data with PlotJuggler
 Source the setup files in the workspace and launch PlotJuggler.
 
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -147,6 +155,7 @@ Keep your drone running in Gazebo with make px4_sitl gz_my_quadrotor and keep QG
 
 Terminal 2.Source the setup files and execute DDS_run.sh.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -156,7 +165,10 @@ cd src/aerial_robotics/
 
 Terminal 3. First, make the drone takeoff in QGroundControl. Then, launch the ROS 2 bag command to record the drone's flight path into a folder called heart_trajectory.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
+```
+```
 cd src/aerial_robotics/ros2_ws 
 ```
 ```
@@ -165,6 +177,7 @@ ros2 bag record -o heart_trajectory /fmu/out/vehicle_local_position /fmu/out/veh
 
 Terminal 4.Launch Trajectory Node . In your workspace, execute this command. The drone will execute a heart-shaped trajectory.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
@@ -172,6 +185,7 @@ ros2 run offboard_rl go_to_point
 ```
 Terminal 5. Analyze Trajectory Data with PlotJuggler. Source the setup files in the workspace. After the drone completes the trajectory, launch PlotJuggler.
 ```
+cd /home/user/ros2_ws
 source install/setup.bash
 ```
 ```
