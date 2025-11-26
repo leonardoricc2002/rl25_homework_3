@@ -6,7 +6,7 @@
 #include <px4_msgs/msg/offboard_control_mode.hpp>
 #include <px4_msgs/msg/vehicle_command.hpp>
 #include <px4_msgs/msg/trajectory_setpoint.hpp>
-#include <offboard_rl/utils.h> // Assumo che offboard_rl/utils.h contenga Vector4d, VectorXd e la funzione quatToRpy
+#include <offboard_rl/utils.h> 
 
 using namespace std::chrono_literals;
 using namespace px4_msgs::msg;
